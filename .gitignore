@@ -1,0 +1,66 @@
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
+
+# Diagnostic reports
+report.[0-9]*.*
+
+# Runtime data
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+/node_modules
+
+# Build output
+dist
+.output
+.solid
+.vercel
+.netlify
+.vinxi
+.wrangler
+.vite
+
+# Tooling caches
+.cache
+.eslintcache
+.parcel-cache
+.sass-cache
+.tsbuildinfo
+.turbo
+
+# Storybook
+storybook-static
+
+# Testing
+coverage
+.nyc_output
+.vitest
+
+# Environment files
+.env
+.env*.local
+
+# IDEs and editors
+.idea
+.project
+.classpath
+*.launch
+.settings/
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
+.Python
+
+# Temporary files
+temp.txt
+arrastar.txt
+copy.txt
+gitignore

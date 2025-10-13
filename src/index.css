@@ -1,0 +1,101 @@
+/* IMPORTS DEVEM VIR PRIMEIRO */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* TOKENS DE TEMA */
+@theme {
+  --color-ps-indigo: #5643D7;
+  --color-ps-black-1: #202124;
+  --color-ps-black-2: #1C1C1F;
+  --color-ps-gray: #87878C;
+  --color-ps-white: #F0F0F5;
+  --color-ps-gray-2: #2C2F33;
+  --color-ps-gray-3: #3B3E44;
+
+  --font-inter: 'Inter', sans-serif;
+
+  /* Escala tipográfica (modular 1.2) — igual à imagem */
+  --text-h1: 2.986rem;  /* ≈ 47.8px */
+  --text-h2: 2.488rem;  /* ≈ 39.8px */
+  --text-h3: 2.074rem;  /* ≈ 33.2px */
+  --text-h4: 1.728rem;  /* ≈ 27.6px */
+  --text-h5: 1.44rem;   /* ≈ 23.0px */
+  --text-h6: 1.2rem;    /* 19.2px */
+  --text-body: 1rem;    /* 16px */
+  --text-small: .833rem;/* ≈ 13.3px */
+  --text-tiny: .694rem; /* ≈ 11.1px */
+}
+
+/* COMPONENTES TIPOGRÁFICOS */
+@layer components {
+  .h1 {
+    font-family: var(--font-inter);
+    font-size: var(--text-h1);
+    @apply font-semibold leading-tight tracking-[-0.01em];
+  }
+  .h2 {
+    font-family: var(--font-inter);
+    font-size: var(--text-h2);
+    @apply font-semibold leading-tight tracking-[-0.01em];
+  }
+  .h3 {
+    font-family: var(--font-inter);
+    font-size: var(--text-h3);
+    @apply font-semibold leading-tight tracking-[-0.005em];
+  }
+  .h4 {
+    font-family: var(--font-inter);
+    font-size: var(--text-h4);
+    @apply font-semibold leading-tight;
+  }
+  .h5 {
+    font-family: var(--font-inter);
+    font-size: var(--text-h5);
+    @apply font-semibold leading-snug;
+  }
+  .h6 {
+    font-family: var(--font-inter);
+    font-size: var(--text-h6);
+    @apply font-medium leading-snug;
+  }
+
+  .p {
+    font-family: var(--font-inter);
+    font-size: var(--text-body);
+    @apply leading-7 text-ps-gray-3;
+  }
+  .p-semibold {
+    font-family: var(--font-inter);
+    font-size: var(--text-body);
+    @apply font-semibold leading-snug;
+  }
+  .small {
+    font-family: var(--font-inter);
+    font-size: var(--text-small);
+    @apply leading-6 text-ps-gray;
+  }
+  .small-semibold {
+    font-family: var(--font-inter);
+    font-size: var(--text-small);
+    @apply font-semibold leading-snug;
+  }
+  .tiny {
+    font-family: var(--font-inter);
+    font-size: var(--text-tiny);
+    @apply leading-5 text-ps-gray;
+  }
+}
+
+/* TAMANHOS FLUIDOS EM TELAS GRANDES (SEM ARBITRARY NO @apply) */
+@media (min-width: 1024px) {
+  .h1 { font-size: clamp(2.5rem, 2vw + 2rem, calc(var(--text-h1) * 1.05)); }
+  .h2 { font-size: clamp(2.1rem, 1.6vw + 1.6rem, calc(var(--text-h2) * 1.05)); }
+}
+
+/* RESET BÁSICO */
+html {
+  font-family: var(--font-inter);
+  color: var(--color-ps-black-1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
