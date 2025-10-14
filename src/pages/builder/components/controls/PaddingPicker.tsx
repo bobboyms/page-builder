@@ -13,7 +13,7 @@ export type PaddingPickerProps = {
 };
 
 export const PaddingPicker: Component<PaddingPickerProps> = (props) => (
-  <div class="flex flex-row gap-2 w-full min-w-0 overflow-hidden">
+  <div class="flex flex-row gap-3 w-full min-w-0 overflow-hidden">
     <InputSize value={props.paddingW} onChange={props.paddingWOnChange} icon={IconPaddingW} />
     <InputSize value={props.paddingH} onChange={props.paddingHOnChange} icon={IconPaddingH} />
   </div>

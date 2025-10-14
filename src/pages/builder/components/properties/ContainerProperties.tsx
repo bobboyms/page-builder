@@ -43,7 +43,7 @@ export const ContainerProperties: Component<ContainerPropertiesProps> = (props) 
   const handleBorderRadiusPickerChange = (value: SizeValue) => props.onUpdate({ borderRadiusPicker: value });
 
   return (
-    <div class="space-y-2">
+    <div class="space-y-3">
       <h6 class="p-semibold">Layout style</h6>
       <LayoutStyleSelector value={layoutStyle()} onChange={handleLayoutChange} iconSize="h-5 w-5" />
       <SizeModeSelector value={sizeModStyle()} onChange={handleSizeModeChange} />

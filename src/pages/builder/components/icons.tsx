@@ -191,3 +191,52 @@ export const IconRound = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => (
   </svg>
 
 );
+
+export const IconOpacity = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 26 26"
+    fill="none"
+    style={{ display: "block" }}            // elimina o “pé”
+    {...props}
+  >
+    {/* moldura */}
+    <rect x="4.6" y="0.6" width="20.8" height="20.8" rx="2.4"
+      stroke="currentColor" stroke-width="1.8" />
+
+    {/* pixels (mantidos) */}
+    <g fill="#D9D9D9">
+      <rect opacity="0.7" x="10" y="18.5" width="1.25" height="1.25" rx="0.625" />
+      <rect opacity="0.7" x="7.5" y="18.5" width="1.25" height="1.25" rx="0.625" />
+      <rect opacity="0.7" x="10" y="16" width="1.25" height="1.25" rx="0.625" />
+      <rect opacity="0.7" x="12.5" y="13.5" width="1.25" height="1.25" rx="0.625" />
+      <rect opacity="0.7" x="15" y="11" width="1.25" height="1.25" rx="0.625" />
+      <rect opacity="0.7" x="17.5" y="8.5" width="1.25" height="1.25" rx="0.625" />
+      <rect opacity="0.7" x="20" y="6" width="1.25" height="1.25" rx="0.625" />
+      <rect opacity="0.7" x="22.5" y="3.5" width="1.25" height="1.25" rx="0.625" />
+      <rect opacity="0.7" x="12.5" y="16" width="1.25" height="1.25" rx="0.625" />
+      <rect x="12.5" y="18.5" width="1.25" height="1.25" rx="0.625" />
+      <rect x="15" y="18.5" width="1.25" height="1.25" rx="0.625" />
+      <rect x="17.5" y="18.5" width="1.25" height="1.25" rx="0.625" />
+      <rect x="20" y="18.5" width="1.25" height="1.25" rx="0.625" />
+      <rect x="22.5" y="18.5" width="1.25" height="1.25" rx="0.625" />
+      <rect x="15" y="16" width="1.25" height="1.25" rx="0.625" />
+      <rect x="17.5" y="16" width="1.25" height="1.25" rx="0.625" />
+      <rect x="20" y="16" width="1.25" height="1.25" rx="0.625" />
+      <rect x="22.5" y="16" width="1.25" height="1.25" rx="0.625" />
+      <rect x="17.5" y="13.5" width="1.25" height="1.25" rx="0.625" />
+      <rect x="20" y="13.5" width="1.25" height="1.25" rx="0.625" />
+      <rect x="22.5" y="13.5" width="1.25" height="1.25" rx="0.625" />
+      <rect x="20" y="11" width="1.25" height="1.25" rx="0.625" />
+      <rect x="22.5" y="11" width="1.25" height="1.25" rx="0.625" />
+      <rect x="22.5" y="8.5" width="1.25" height="1.25" rx="0.625" />
+      <rect opacity="0.7" x="15" y="13.5" width="1.25" height="1.25" rx="0.625" />
+      <rect opacity="0.7" x="17.5" y="11" width="1.25" height="1.25" rx="0.625" />
+      <rect opacity="0.7" x="20" y="8.5" width="1.25" height="1.25" rx="0.625" />
+      <rect opacity="0.7" x="22.5" y="6" width="1.25" height="1.25" rx="0.625" />
+    </g>
+  </svg>
+);
+
+
+
+

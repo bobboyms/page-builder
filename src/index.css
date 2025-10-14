@@ -84,6 +84,7 @@
     font-size: var(--text-tiny);
     @apply leading-5 text-ps-gray;
   }
+
 }
 
 /* TAMANHOS FLUIDOS EM TELAS GRANDES (SEM ARBITRARY NO @apply) */

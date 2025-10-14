@@ -24,7 +24,7 @@ export const PropertyPanel: Component<PropertyPanelProps> = (props) => {
   // createEffect(() => console.log(props.selectedNode()))
 
   return (
-    <aside class="w-60 hidden md:block p-2 border-r bg-ps-black-1 text-white h-full overflow-hidden">
+    <aside class="w-64 hidden md:block p-3 border-r bg-ps-black-1 text-white h-full overflow-hidden">
       <h2 class="text-lg font-semibold mb-4">Propriedades</h2>
       <Show when={props.selectedNode()} fallback={<div class="text-gray-500">Selecione um bloco para editar.</div>}>
         {(node) => (

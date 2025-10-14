@@ -50,13 +50,17 @@ export const BuilderPage: Component = () => {
   return (
     <div class="h-screen flex flex-col font-inter">
       <Header />
-      <FloatingToolbar
-        position={toolbarPosition()}
-        onDelete={deleteNode}
-        onDuplicate={duplicateNode}
-        onMoveUp={() => moveSelectedNode("up")}
-        onMoveDown={() => moveSelectedNode("down")}
-      />
+      <Show when={!isPreview()}>
+        <FloatingToolbar
+          position={toolbarPosition()}
+          onDelete={deleteNode}
+          onDuplicate={duplicateNode}
+          onMoveUp={() => moveSelectedNode("up")}
+          onMoveDown={() => moveSelectedNode("down")}
+        />
+      </Show>
+
+
       <button onClick={togglePreview}>
         {isPreview() ? "Editar" : "Pré-visualizar"}
       </button>
