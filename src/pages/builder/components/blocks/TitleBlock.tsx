@@ -36,7 +36,7 @@ export const TitleBlock: Component<TitleBlockProps> = (props) => {
         />
       }
     >
-      <Dynamic component={tag()} class="font-bold">
+      <Dynamic component={tag()} class="font-bold m-0">
         {props.text}
       </Dynamic>
     </Show>

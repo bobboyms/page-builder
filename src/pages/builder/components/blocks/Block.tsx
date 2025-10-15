@@ -18,26 +18,54 @@ export interface BlockProps {
 }
 
 const containerWrapperSizing = (props: ContainerProps): JSX.CSSProperties => {
+  const baseSizing = {
+    "box-sizing": props.sizeModStyle === "fixed" ? "content-box" : "border-box",
+  } as JSX.CSSProperties;
+
   switch (props.sizeModStyle) {
     case "fill":
-      return { flex: "1 1 0", minWidth: 0, minHeight: 0 } as JSX.CSSProperties;
+      return {
+        ...baseSizing,
+        flex: "1 1 0",
+        minWidth: 0,
+        minHeight: 0,
+      } as JSX.CSSProperties;
     case "fixed":
       return {
+        ...baseSizing,
+        flex: "0 0 auto",
         width: `${props.width.value}${props.width.measurement}`,
         height: `${props.height.value}${props.height.measurement}`,
-
       } as JSX.CSSProperties;
     case "hug":
     default:
-      return { flex: "0 0 auto", width: "fit-content", height: "fit-content", alignSelf: "flex-start" } as JSX.CSSProperties;
+      return {
+        ...baseSizing,
+        flex: "0 0 auto",
+        width: "fit-content",
+        height: "fit-content",
+        alignSelf: "flex-start",
+      } as JSX.CSSProperties;
   }
 };
 
 const blockWrapperSizing = (node: Node): JSX.CSSProperties => {
-  if (node.type !== "container") {
-    return { flex: "0 0 auto", width: "auto", height: "auto" } as JSX.CSSProperties;
+  if (node.type === "container") {
+    return containerWrapperSizing(node.props as ContainerProps);
   }
-  return containerWrapperSizing(node.props as ContainerProps);
+
+  if (node.type === "title") {
+    return {
+      display: "inline-flex",
+      flexDirection: "column",
+      width: "fit-content",
+      maxWidth: "100%",
+      height: "fit-content",
+      alignSelf: "flex-start",
+    } as JSX.CSSProperties;
+  }
+
+  return { flex: "0 0 auto", width: "100%", height: "auto" } as JSX.CSSProperties;
 };
 
 export const Block: Component<BlockProps> = (props) => {
@@ -60,7 +88,7 @@ export const Block: Component<BlockProps> = (props) => {
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      class="relative transition-shadow hover:shadow-lg"
+      class="relative transition-shadow hover:shadow-lg box-border"
       classList={{
         "border-2 border-solid border-blue-500 shadow-xl": isSelected(),
         "border border-solid border-blue-500": !isSelected() && isHovered(),
