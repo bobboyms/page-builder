@@ -19,8 +19,13 @@ export interface BlockProps {
 
 const containerWrapperSizing = (props: ContainerProps): JSX.CSSProperties => {
   const baseSizing = {
-    "box-sizing": props.sizeModStyle === "fixed" ? "content-box" : "border-box",
+    "box-sizing": "border-box",
   } as JSX.CSSProperties;
+
+  const widthValue = `${props.width.value}${props.width.measurement}`;
+  const heightValue = `${props.height.value}${props.height.measurement}`;
+  const widthIsPercent = props.width.measurement === "%";
+  const heightIsPercent = props.height.measurement === "%";
 
   switch (props.sizeModStyle) {
     case "fill":
@@ -33,9 +38,11 @@ const containerWrapperSizing = (props: ContainerProps): JSX.CSSProperties => {
     case "fixed":
       return {
         ...baseSizing,
-        flex: "0 0 auto",
-        width: `${props.width.value}${props.width.measurement}`,
-        height: `${props.height.value}${props.height.measurement}`,
+        flex: widthIsPercent ? "1 1 0" : "0 0 auto",
+        width: widthValue,
+        height: heightValue,
+        ...(widthIsPercent ? { minWidth: 0 } : {}),
+        ...(heightIsPercent ? { minHeight: 0 } : {}),
       } as JSX.CSSProperties;
     case "hug":
     default:
@@ -90,7 +97,7 @@ export const Block: Component<BlockProps> = (props) => {
       onMouseLeave={() => setIsHovered(false)}
       class="relative transition-shadow hover:shadow-lg box-border"
       classList={{
-        "border-2 border-solid border-blue-500 shadow-xl": isSelected(),
+        "border border-solid border-blue-500 outline outline-2 outline-blue-500 shadow-xl": isSelected(),
         "border border-solid border-blue-500": !isSelected() && isHovered(),
         "border border-dashed border-gray-200": !isSelected() && !isHovered(),
       }}
