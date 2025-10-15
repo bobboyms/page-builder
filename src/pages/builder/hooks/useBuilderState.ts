@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createSignal } from "solid-js";
+import { createEffect, createMemo, createSignal, onCleanup } from "solid-js";
 import { createStore, produce } from "solid-js/store";
 import type {
   ComponentType,
@@ -27,6 +27,8 @@ export const useBuilderState = () => {
   const [editingNodeId, setEditingNodeId] = createSignal<string | null>(null);
   const [isPreview, setIsPreview] = createSignal(false);
   const [nodeIndex, setNodeIndex] = createSignal<NodeIndex>(new Map());
+  const [selectedElement, setSelectedElement] = createSignal<HTMLElement | null>(null);
+  const [clipboardNode, setClipboardNode] = createSignal<Node | null>(null);
 
   createEffect(() => {
     const newIndex: NodeIndex = new Map();
@@ -47,20 +49,65 @@ export const useBuilderState = () => {
 
   const resetToolbar = () => setToolbarPosition(initialToolbar);
 
+  const updateToolbarPosition = (element?: HTMLElement | null) => {
+    if (typeof window === "undefined") return;
+    const target = element ?? selectedElement();
+    if (!target) {
+      resetToolbar();
+      return;
+    }
+
+    const rect = target.getBoundingClientRect();
+    const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+    const offsetLeft = clamp(rect.left + window.scrollX, 8, window.scrollX + window.innerWidth - 160);
+
+    setToolbarPosition({
+      top: rect.top + window.scrollY,
+      left: offsetLeft,
+      visible: true,
+    });
+  };
+
   const selectNode = (nodeId: string | null, element?: HTMLElement) => {
     if (editingNodeId()) return;
     setSelectedNodeId(nodeId);
-    if (nodeId && element) {
-      const rect = element.getBoundingClientRect();
-      setToolbarPosition({
-        top: rect.top + window.scrollY,
-        left: rect.left + window.scrollX,
-        visible: true,
-      });
+    if (typeof window === "undefined") return;
+
+    if (nodeId) {
+      const targetElement =
+        element ?? (document.querySelector(`[data-node-id="${nodeId}"]`) as HTMLElement | null);
+      setSelectedElement(targetElement ?? null);
+      updateToolbarPosition(targetElement);
     } else {
+      setSelectedElement(null);
       resetToolbar();
     }
   };
+
+  createEffect(() => {
+    const element = selectedElement();
+    if (!element) return;
+
+    updateToolbarPosition(element);
+
+    const handleViewportChange = () => updateToolbarPosition(element);
+
+    document.addEventListener("scroll", handleViewportChange, true);
+    window.addEventListener("resize", handleViewportChange);
+
+    const resizeObserver =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => updateToolbarPosition(element))
+        : undefined;
+
+    resizeObserver?.observe(element);
+
+    onCleanup(() => {
+      document.removeEventListener("scroll", handleViewportChange, true);
+      window.removeEventListener("resize", handleViewportChange);
+      resizeObserver?.disconnect();
+    });
+  });
 
   const moveNode = (sourceId: string, targetId: string, position: DropPosition) => {
     const indexSnapshot = nodeIndex();
@@ -170,6 +217,47 @@ export const useBuilderState = () => {
     }));
   };
 
+  const copySelectedNode = () => {
+    const node = selectedNode();
+    if (!node) return;
+    const snapshot = cloneNodeWithNewIds(node);
+    setClipboardNode(snapshot);
+  };
+
+  const pasteClipboardNode = () => {
+    const clipboard = clipboardNode();
+    if (!clipboard) return false;
+
+    const nodeToInsert = cloneNodeWithNewIds(clipboard);
+    const targetId = selectedNodeId();
+    const indexSnapshot = nodeIndex();
+
+    let inserted = false;
+
+    setTree(produce((draft) => {
+      if (targetId) {
+        const location = indexSnapshot.get(targetId);
+        if (location) {
+          const parent = location.parentId === "root" ? draft : findNode(location.parentId, draft);
+          if (parent) {
+            parent.children.splice(location.index + 1, 0, nodeToInsert);
+            inserted = true;
+          }
+          return;
+        }
+      }
+
+      (draft.children as Node[]).push(nodeToInsert);
+      inserted = true;
+    }));
+
+    if (inserted) queueMicrotask(() => selectNode(nodeToInsert.id));
+
+    return inserted;
+  };
+
+  const hasClipboardNode = () => Boolean(clipboardNode());
+
   const moveSelectedNode = (direction: "up" | "down") => {
     const id = selectedNodeId();
     if (!id) return;
@@ -223,6 +311,9 @@ export const useBuilderState = () => {
       clearSelection,
       setToolbarPosition,
       setIsPreview,
+      copySelectedNode,
+      pasteClipboardNode,
+      hasClipboardNode,
     },
   };
 };

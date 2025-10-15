@@ -17,21 +17,37 @@ export const FloatingToolbar: Component<FloatingToolbarProps> = (props) => (
       style={{
         top: `${props.position.top}px`,
         left: `${props.position.left}px`,
-        transform: "translateY(-100%)",
+        transform: "translateY(calc(-100% - 8px))",
       }}
       onClick={(e) => e.stopPropagation()}
     >
-      <button title="Mover para Cima" onClick={props.onMoveUp} class="p-1.5 rounded hover:bg-gray-700">
+      <button
+        title="Mover para Cima (Ctrl/Cmd+↑)"
+        onClick={props.onMoveUp}
+        class="p-1.5 rounded hover:bg-gray-700"
+      >
         <IconArrowUp />
       </button>
-      <button title="Mover para Baixo" onClick={props.onMoveDown} class="p-1.5 rounded hover:bg-gray-700">
+      <button
+        title="Mover para Baixo (Ctrl/Cmd+↓)"
+        onClick={props.onMoveDown}
+        class="p-1.5 rounded hover:bg-gray-700"
+      >
         <IconArrowDown />
       </button>
       <div class="w-px h-5 bg-gray-600" />
-      <button title="Duplicar" onClick={props.onDuplicate} class="p-1.5 rounded hover:bg-gray-700">
+      <button
+        title="Duplicar (Ctrl/Cmd+D)"
+        onClick={props.onDuplicate}
+        class="p-1.5 rounded hover:bg-gray-700"
+      >
         <IconCopy />
       </button>
-      <button title="Excluir" onClick={props.onDelete} class="p-1.5 rounded hover:bg-red-500">
+      <button
+        title="Excluir (Delete)"
+        onClick={props.onDelete}
+        class="p-1.5 rounded hover:bg-red-500"
+      >
         <IconTrash />
       </button>
     </div>

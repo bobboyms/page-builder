@@ -75,18 +75,30 @@ const TreeView: Component<{ root: TreeRoot } & TreeSharedProps> = (props) => (
   </div>
 );
 
+type PaletteVariant = "desktop" | "mobile";
+
 export const ComponentPalette: Component<{
   tree: TreeRoot;
   selectedNodeId: Accessor<string | null>;
   onNodeSelect: (nodeId: string) => void;
-}> = (props) => (
-  <aside class="w-48 hidden md:block p-4 border-r bg-ps-indigo text-white">
-    <h2 class="text-lg font-semibold">Componentes</h2>
-    <div class="mt-4 space-y-2">
-      <PaletteItem type="title" label="Título" />
-      <PaletteItem type="text-input" label="Campo de Texto" />
-      <PaletteItem type="container" label="Container" />
-    </div>
-    <TreeView root={props.tree} selectedNodeId={props.selectedNodeId} onNodeSelect={props.onNodeSelect} />
-  </aside>
-);
+  variant?: PaletteVariant;
+}> = (props) => {
+  const baseClasses: Record<PaletteVariant, string> = {
+    desktop: "hidden md:flex md:flex-col w-52 flex-shrink-0 h-full p-4 border-r bg-ps-indigo text-white overflow-y-auto",
+    mobile: "flex flex-col w-full max-w-sm h-full p-4 bg-ps-indigo text-white overflow-y-auto",
+  };
+
+  const variant = props.variant ?? "desktop";
+
+  return (
+    <aside class={baseClasses[variant]}>
+      <h2 class="text-lg font-semibold">Componentes</h2>
+      <div class="mt-4 space-y-2">
+        <PaletteItem type="title" label="Título" />
+        <PaletteItem type="text-input" label="Campo de Texto" />
+        <PaletteItem type="container" label="Container" />
+      </div>
+      <TreeView root={props.tree} selectedNodeId={props.selectedNodeId} onNodeSelect={props.onNodeSelect} />
+    </aside>
+  );
+};
