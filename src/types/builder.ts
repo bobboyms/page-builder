@@ -83,4 +83,5 @@ export interface BlockRendererProps {
   isEditing: boolean;
   onUpdate: (newProps: UpdateNodeProps) => void;
   onStopEditing: () => void;
+  containerStyle?: JSX.CSSProperties;
 }

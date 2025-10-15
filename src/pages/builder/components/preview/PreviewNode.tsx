@@ -5,15 +5,17 @@ import { BlockRenderer, noop, previewWrapperSizing } from "../blocks/BlockRender
 export const PreviewNode: Component<BuilderPreviewProps> = (props) => {
   const wrapperStyle = previewWrapperSizing(props.node);
 
-  const content = (
-    <BlockRenderer node={props.node} isEditing={false} onUpdate={noop} onStopEditing={noop}>
+  return (
+    <BlockRenderer
+      node={props.node}
+      isEditing={false}
+      onUpdate={noop}
+      onStopEditing={noop}
+      containerStyle={wrapperStyle}
+    >
       <For each={props.node.type === "container" ? props.node.children : []}>
         {(child) => <PreviewNode node={child} />}
       </For>
     </BlockRenderer>
   );
-
-  if (!wrapperStyle) return content;
-
-  return <div style={wrapperStyle}>{content}</div>;
 };

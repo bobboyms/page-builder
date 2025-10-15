@@ -23,10 +23,9 @@ const containerWrapperSizing = (props: ContainerProps): JSX.CSSProperties => {
       return { flex: "1 1 0", minWidth: 0, minHeight: 0 } as JSX.CSSProperties;
     case "fixed":
       return {
-        flex: "0 0 auto",
         width: `${props.width.value}${props.width.measurement}`,
         height: `${props.height.value}${props.height.measurement}`,
-        alignSelf: "flex-start",
+
       } as JSX.CSSProperties;
     case "hug":
     default:
@@ -49,6 +48,7 @@ export const Block: Component<BlockProps> = (props) => {
   return (
     <div
       ref={blockRef}
+      data-node-id={props.node.id}
       use:droppable={{ id: props.node.id, onDrop: props.onDrop, acceptInside: props.node.type === "container" }}
       onClick={(e) => {
         e.stopPropagation();

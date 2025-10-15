@@ -21,7 +21,11 @@ export const BlockRenderer: Component<BlockRendererProps> = (props) => (
       {(node) => <InputBlock {...node().props} />}
     </Match>
     <Match when={props.node.type === "container" && props.node}>
-      {(node) => <ContainerBlock {...node().props}>{props.children}</ContainerBlock>}
+      {(node) => (
+        <ContainerBlock {...node().props} styleOverrides={props.containerStyle}>
+          {props.children}
+        </ContainerBlock>
+      )}
     </Match>
     <Match when={true}>
       <div>Tipo de bloco desconhecido</div>
@@ -29,7 +33,7 @@ export const BlockRenderer: Component<BlockRendererProps> = (props) => (
   </Switch>
 );
 
-export const noop = () => {};
+export const noop = () => { };
 
 export const previewWrapperSizing = (node: Node): JSX.CSSProperties | undefined => {
   if (node.type !== "container") return undefined;
@@ -39,10 +43,8 @@ export const previewWrapperSizing = (node: Node): JSX.CSSProperties | undefined 
       return { flex: "1 1 0", minWidth: 0, minHeight: 0 } as JSX.CSSProperties;
     case "fixed":
       return {
-        flex: "0 0 auto",
         width: `${props.width.value}${props.width.measurement}`,
         height: `${props.height.value}${props.height.measurement}`,
-        alignSelf: "flex-start",
       } as JSX.CSSProperties;
     case "hug":
     default:

@@ -30,6 +30,16 @@ export const BuilderPage: Component = () => {
     },
   } = useBuilderState();
 
+  const handlePaletteNodeSelect = (nodeId: string) => {
+    const targetElement = document.querySelector(`[data-node-id="${nodeId}"]`);
+    if (targetElement instanceof HTMLElement) {
+      selectNode(nodeId, targetElement);
+      targetElement.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      selectNode(nodeId);
+    }
+  };
+
   onMount(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
@@ -60,12 +70,15 @@ export const BuilderPage: Component = () => {
         />
       </Show>
 
-
       <button onClick={togglePreview}>
         {isPreview() ? "Editar" : "Pré-visualizar"}
       </button>
       <main class="flex flex-1 overflow-hidden">
-        <ComponentPalette />
+        <ComponentPalette
+          tree={tree}
+          selectedNodeId={selectedNodeId}
+          onNodeSelect={handlePaletteNodeSelect}
+        />
         <section
           class="p-10 flex-1 min-w-0 h-full overflow-auto"
           onClick={() => {
