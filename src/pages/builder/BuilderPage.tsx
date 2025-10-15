@@ -166,6 +166,7 @@ export const BuilderPage: Component = () => {
           tree={tree}
           selectedNodeId={selectedNodeId}
           onNodeSelect={handlePaletteNodeSelect}
+          onDrop={drop}
         />
         <section
           class="p-10 flex-1 min-w-0 h-full overflow-auto"
@@ -222,6 +223,7 @@ export const BuilderPage: Component = () => {
                 tree={tree}
                 selectedNodeId={selectedNodeId}
                 onNodeSelect={handlePaletteNodeSelect}
+                onDrop={drop}
                 variant="mobile"
               />
               <button
